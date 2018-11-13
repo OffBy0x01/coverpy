@@ -1,0 +1,9 @@
+Dear {{tname}},
+
+I wish to apply for the post of {{position}} advertised recently on {{source}}.
+I am a {{study_year}} year {{course}} student at {{university}} University currently tracking towards an First Class Honours degree with distinction. A copy of my CV is enclosed for your perusal.
+
+I look forward to hearing from you.
+
+Best wishes,
+{{yname}}
