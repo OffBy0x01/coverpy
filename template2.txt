@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{graphicx}% http://ctan.org/pkg/graphicx
+\setlength{\parindent}{0pt}% Remove paragraph indent
+\begin{document}
+\hspace*{0.5\linewidth}
+
+Dear {{contact_name}}, \par \bigskip
+
+I am writing to you regarding the {{position}} position at {{company_name}}. I learned of the position while browsing {{website}} website and I was instantly attracted to the {{attractive_aspect}}. I firmly believe that I would be a great fit for {{this_position}}. \par \bigskip
+
+I am a {{nth}} year {{course}} student at {{place_of_study}}, currently tracking toward a {{degree_classification}} Honours Degree. I am {{about_you}} and I have been an active member of the {{relevant_society}} Society since {{when}}. I am passionate about {{passion}} and am interested in joining a team that shares this passion. \par \bigskip
+
+My technical expertise covers cover letter automation, programming languages including {{known_programming_lang}}, and {{some_other_things}}. \par \bigskip
+
+I look forward to hearing from you. \par \bigskip
+
+Best wishes, \par
+{{my_name}}
+
+\end{document}
