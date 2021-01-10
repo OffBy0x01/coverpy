@@ -61,12 +61,17 @@ def write_cl(string, output_file):
 if __name__ == "__main__":
         # Arg Parsing
         parser = argparse.ArgumentParser()
+        # File in
         parser.add_argument("-file", nargs='?', required=True)
+        # Boolean if the file is a tex file
         parser.add_argument("-tex", nargs='?', default=False, required=False)
+        # Replace with other file
+        parser.add_argument("-fileinclude", nargs='?', default=False, required=False)
         args = parser.parse_known_args()[0]
 
         # Read in template file
         tex = args.tex
+        fileinclude = args.fileinclude
         filename = args.file
         file = get_file(filename)
         if file == 1:
@@ -77,17 +82,32 @@ if __name__ == "__main__":
 
         # Find all template entries
         entries = re.findall("{{(.*?)}}", file)
+
+        # For each placeholder
         for entry in entries:
+            # Check for a set argument
             parser.add_argument("-%s" % entry, nargs='?', default="UNSET")
             args = vars(parser.parse_known_args()[0])
-            if args[entry] == "UNSET" or args[entry] == None:
-                file = file.sub("{{%s}}" % entry, input(info("Enter value for '%s': " % entry)))
-            else:
-                file = file.sub("{{%s}}" % entry, args[entry])
 
+            if fileinclude:
+                # When file include is enabled check for a file with the placeholder name
+                fileincludename = "./includes/{}".format(entry)
+                substitute = get_file(fileincludename)
+                
+                while substitute == 1:
+                    fileincludename = input(info("'%s' could not be found. Enter an alternative file and path from %s: " % (entry, os.getcwd())))
+                    substitute = get_file(fileincludename)
+                
+                file = file.sub("{{%s}}" % entry, substitute)
+                
+            else:
+                if args[entry] == "UNSET" or args[entry] == None:
+                    file = file.sub("{{%s}}" % entry, input(info("Enter value for '%s': " % entry)))
+                else:
+                    file = file.sub("{{%s}}" % entry, args[entry])
 
         # Write output
-        if "." in filename :
+        if "." in filename:
             filename = filename.split(".")[0]
             parser.add_argument("-outfile", nargs='?', default="%s_out" % filename)
             write_cl(file, parser.parse_known_args()[0].outfile)
@@ -99,8 +119,6 @@ if __name__ == "__main__":
         if parser.parse_known_args()[0].print.lower() == "true":
             print(success("\nFinished writing cover letter.\n"))
             print(file)
-
-
 
         # All done
         exit(0)
